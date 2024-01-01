@@ -313,17 +313,19 @@
  }
   </style>
 
+
   <button onclick="openModal()">Open Popup</button>
 
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span onclick="closeModal()" class="close">&times;</span>
-      <video id="myVideo" width="100%" height="auto" autoplay loop>
+      <video id="myVideo" width="100%" height="auto" autoplay loop muted playsinline>
         <source src="images\new year 2024.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
     </div>
   </div>
+
   <script>
     // Open the modal automatically when the page loads
     window.onload = function() {
@@ -331,7 +333,21 @@
     };
 
     function openModal() {
+      var video = document.getElementById("myVideo");
       document.getElementById("myModal").style.display = "block";
+
+      // Check if the browser supports the 'muted' attribute
+      var isMutedSupported = typeof video.muted !== "undefined";
+
+      // Check if the video needs to be muted for autoplay
+      if (isMutedSupported) {
+        video.muted = true;
+      } else {
+        // If not supported, you may need to rely on user interaction to play the video
+        video.removeAttribute("autoplay");
+        video.removeAttribute("loop");
+        video.removeAttribute("playsinline");
+      }
     }
 
     function closeModal() {
@@ -345,6 +361,8 @@
       }
     };
   </script>
+
+
 
 
 
